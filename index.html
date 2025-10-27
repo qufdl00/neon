@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>네온 전광판 효과</title>
+<style>
+  body {
+    margin: 0;
+    background: black;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* 벌레 스타일 */
+  #bugs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20; /* 이미지 위 */
+  }
+  #bugs .bug {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fly linear infinite;
+  }
+
+  @keyframes fly {
+    0% { transform: translate(var(--x1), var(--y1)) scale(1); opacity: 0.3; }
+    50% { transform: translate(var(--x2), var(--y2)) scale(1.2); opacity: 0.7; }
+    100% { transform: translate(var(--x3), var(--y3)) scale(1); opacity: 0.3; }
+  }
+
+  .marquee-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+  }
+
+  /* 위에서 비치는 하이라이트 밝기 낮춤 */
+  .marquee-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,255,255,0.05) 50%,
+      rgba(255,255,255,0) 100%
+    );
+    pointer-events: none;
+    mix-blend-mode: screen;
+    z-index: 3;
+  }
+
+  .marquee {
+    display: flex;
+    gap: 0;
+    animation: scroll 100s linear infinite;
+  }
+
+  .marquee img {
+    width: auto;
+    height: 14vw;
+    max-height: 200px;
+    object-fit: contain;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background: black;
+    filter:
+      brightness(1.0)
+      contrast(1.2)
+      drop-shadow(0 0 2px #0ff)
+      drop-shadow(0 0 5px #0ff)
+      drop-shadow(0 0 10px #0ff)
+      drop-shadow(0 0 15px #80ffff);
+    animation: flicker 0.15s infinite;
+  }
+
+  /* 깜빡임 */
+  @keyframes flicker {
+    0%   { opacity: 0.97; filter: brightness(1.1) contrast(1.2)
+      drop-shadow(0 0 2px #0ff)
+      drop-shadow(0 0 6px #0ff)
+      drop-shadow(0 0 15px #80ffff); }
+    25%  { opacity: 1; filter: brightness(1.15) contrast(1.25)
+      drop-shadow(0 0 3px #0ff)
+      drop-shadow(0 0 8px #0ff)
+      drop-shadow(0 0 18px #80ffff); }
+    50%  { opacity: 0.95; filter: brightness(1.05) contrast(1.2)
+      drop-shadow(0 0 2px #0ff)
+      drop-shadow(0 0 5px #0ff)
+      drop-shadow(0 0 12px #80ffff); }
+    75%  { opacity: 1; filter: brightness(1.12) contrast(1.25)
+      drop-shadow(0 0 3px #0ff)
+      drop-shadow(0 0 9px #0ff)
+      drop-shadow(0 0 20px #80ffff); }
+    100% { opacity: 0.98; filter: brightness(1.1) contrast(1.22)
+      drop-shadow(0 0 2px #0ff)
+      drop-shadow(0 0 6px #0ff)
+      drop-shadow(0 0 15px #80ffff); }
+  }
+
+  /* 이미지 위 노이즈 */
+  .marquee img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.05) 0px,
+        rgba(255,255,255,0.05) 1px,
+        rgba(255,255,255,0.03) 2px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.2) 0%,
+        rgba(255,255,255,0.1) 40%,
+        rgba(255,255,255,0) 100%
+      );
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 768px) { .marquee img { height: 18vw; } }
+  @media (max-width: 480px) { .marquee img { height: 25vw; } }
+</style>
+</head>
+<body>
+
+<div class="marquee-wrapper">
+  <div class="marquee">
+    <!-- 50개 이미지 -->
+    <img src="https://i.imgur.com/xNSTQ4d.png" alt="">
+    <img src="https://i.imgur.com/1rfIqCR.png" alt="">
+    <img src="https://i.imgur.com/uYWfaNZ.png" alt="">
+    <img src="https://i.imgur.com/j5wjW33.png" alt="">
+    <img src="https://i.imgur.com/0LNYaPK.png" alt="">
+    <img src="https://i.imgur.com/DtXOiuY.png" alt="">
+    <img src="https://i.imgur.com/Bx4bcF1.png" alt="">
+    <img src="https://i.imgur.com/pkiamNO.png" alt="">
+    <img src="https://i.imgur.com/0aEcuj6.png" alt="">
+    <img src="https://i.imgur.com/ox4XFz0.png" alt="">
+    <img src="https://i.imgur.com/e2x7ryS.png" alt="">
+    <img src="https://i.imgur.com/f2XvtN9.png" alt="">
+    <img src="https://i.imgur.com/gNlqoA1.png" alt="">
+    <img src="https://i.imgur.com/Yp85fv0.png" alt="">
+    <img src="https://i.imgur.com/HybNxFU.png" alt="">
+    <img src="https://i.imgur.com/cf8838S.png" alt="">
+    <img src="https://i.imgur.com/bpfb2E3.png" alt="">
+    <img src="https://i.imgur.com/NwG7K2v.png" alt="">
+    <img src="https://i.imgur.com/5ig1Q2w.png" alt="">
+    <img src="https://i.imgur.com/2vKlj6M.png" alt="">
+    <img src="https://i.imgur.com/as62ZZB.png" alt="">
+    <img src="https://i.imgur.com/wjaHce0.png" alt="">
+    <img src="https://i.imgur.com/UVBWzEs.png" alt="">
+    <img src="https://i.imgur.com/UF9UuJ0.png" alt="">
+    <img src="https://i.imgur.com/iMO1LRM.png" alt="">
+    <img src="https://i.imgur.com/pyGxM1Q.png" alt="">
+    <img src="https://i.imgur.com/Y1VVMkA.png" alt="">
+    <img src="https://i.imgur.com/eNdQHkM.png" alt="">
+    <img src="https://i.imgur.com/cDgUpZR.png" alt="">
+    <img src="https://i.imgur.com/Cu6WzQT.png" alt="">
+    <img src="https://i.imgur.com/wtlyQvx.png" alt="">
+    <img src="https://i.imgur.com/GM6FUmK.png" alt="">
+    <img src="https://i.imgur.com/87xQeVd.png" alt="">
+    <img src="https://i.imgur.com/oYqXxRf.png" alt="">
+    <img src="https://i.imgur.com/q3JzHxB.png" alt="">
+    <img src="https://i.imgur.com/bCnbZgE.png" alt="">
+    <img src="https://i.imgur.com/mEBON41.png" alt="">
+    <img src="https://i.imgur.com/Jfa0XnE.png" alt="">
+    <img src="https://i.imgur.com/qiQcu9w.png" alt="">
+    <img src="https://i.imgur.com/wGb6Riq.png" alt="">
+    <img src="https://i.imgur.com/BLXgRyE.png" alt="">
+    <img src="https://i.imgur.com/D5Dno7F.png" alt="">
+    <img src="https://i.imgur.com/gNHPgRO.png" alt="">
+    <img src="https://i.imgur.com/Iv5p5n3.png" alt="">
+    <img src="https://i.imgur.com/PpOBNuV.png" alt="">
+    <img src="https://i.imgur.com/rc9z4Cd.png" alt="">
+    <img src="https://i.imgur.com/OOoSHFR.png" alt="">
+    <img src="https://i.imgur.com/Ce5wZq3.png" alt="">
+    <img src="https://i.imgur.com/S7Y8TKm.png" alt="">
+    <img src="https://i.imgur.com/GfomKcR.png" alt="">
+
+    <!-- 무한 루프용 복제 -->
+  <img src="https://i.imgur.com/xNSTQ4d.png" alt="">
+    <img src="https://i.imgur.com/1rfIqCR.png" alt="">
+    <img src="https://i.imgur.com/uYWfaNZ.png" alt="">
+    <img src="https://i.imgur.com/j5wjW33.png" alt="">
+    <img src="https://i.imgur.com/0LNYaPK.png" alt="">
+    <img src="https://i.imgur.com/DtXOiuY.png" alt="">
+    <img src="https://i.imgur.com/Bx4bcF1.png" alt="">
+    <img src="https://i.imgur.com/pkiamNO.png" alt="">
+    <img src="https://i.imgur.com/0aEcuj6.png" alt="">
+    <img src="https://i.imgur.com/ox4XFz0.png" alt="">
+    <img src="https://i.imgur.com/e2x7ryS.png" alt="">
+    <img src="https://i.imgur.com/f2XvtN9.png" alt="">
+    <img src="https://i.imgur.com/gNlqoA1.png" alt="">
+    <img src="https://i.imgur.com/Yp85fv0.png" alt="">
+    <img src="https://i.imgur.com/HybNxFU.png" alt="">
+    <img src="https://i.imgur.com/cf8838S.png" alt="">
+    <img src="https://i.imgur.com/bpfb2E3.png" alt="">
+    <img src="https://i.imgur.com/NwG7K2v.png" alt="">
+    <img src="https://i.imgur.com/5ig1Q2w.png" alt="">
+    <img src="https://i.imgur.com/2vKlj6M.png" alt="">
+    <img src="https://i.imgur.com/as62ZZB.png" alt="">
+    <img src="https://i.imgur.com/wjaHce0.png" alt="">
+    <img src="https://i.imgur.com/UVBWzEs.png" alt="">
+    <img src="https://i.imgur.com/UF9UuJ0.png" alt="">
+    <img src="https://i.imgur.com/iMO1LRM.png" alt="">
+    <img src="https://i.imgur.com/pyGxM1Q.png" alt="">
+    <img src="https://i.imgur.com/Y1VVMkA.png" alt="">
+    <img src="https://i.imgur.com/eNdQHkM.png" alt="">
+    <img src="https://i.imgur.com/cDgUpZR.png" alt="">
+    <img src="https://i.imgur.com/Cu6WzQT.png" alt="">
+    <img src="https://i.imgur.com/wtlyQvx.png" alt="">
+    <img src="https://i.imgur.com/GM6FUmK.png" alt="">
+    <img src="https://i.imgur.com/87xQeVd.png" alt="">
+    <img src="https://i.imgur.com/oYqXxRf.png" alt="">
+    <img src="https://i.imgur.com/q3JzHxB.png" alt="">
+    <img src="https://i.imgur.com/bCnbZgE.png" alt="">
+    <img src="https://i.imgur.com/mEBON41.png" alt="">
+    <img src="https://i.imgur.com/Jfa0XnE.png" alt="">
+    <img src="https://i.imgur.com/qiQcu9w.png" alt="">
+    <img src="https://i.imgur.com/wGb6Riq.png" alt="">
+    <img src="https://i.imgur.com/BLXgRyE.png" alt="">
+    <img src="https://i.imgur.com/D5Dno7F.png" alt="">
+    <img src="https://i.imgur.com/gNHPgRO.png" alt="">
+    <img src="https://i.imgur.com/Iv5p5n3.png" alt="">
+    <img src="https://i.imgur.com/PpOBNuV.png" alt="">
+    <img src="https://i.imgur.com/rc9z4Cd.png" alt="">
+    <img src="https://i.imgur.com/OOoSHFR.png" alt="">
+    <img src="https://i.imgur.com/Ce5wZq3.png" alt="">
+    <img src="https://i.imgur.com/S7Y8TKm.png" alt="">
+    <img src="https://i.imgur.com/GfomKcR.png" alt="">
+
+      <div id="bugs"></div>
+
+  </div>
+</div>
+<script>
+  const bugCount = 6; // 화면 위 벌레 수
+  for(let i = 0; i < bugCount; i++) {
+    const bug = document.createElement('div');
+    bug.className = 'bug';
+    bug.style.setProperty('--x1', `${Math.random() * 100}vw`);
+    bug.style.setProperty('--y1', `${Math.random() * 100}vh`);
+    bug.style.setProperty('--x2', `${Math.random() * 100}vw`);
+    bug.style.setProperty('--y2', `${Math.random() * 100}vh`);
+    bug.style.setProperty('--x3', `${Math.random() * 100}vw`);
+    bug.style.setProperty('--y3', `${Math.random() * 100}vh`);
+    bug.style.animationDuration = `${10 + Math.random() * 10}s`;
+    document.getElementById('bugs').appendChild(bug);
+  }
+</script>
+
+</body>
+</html>
+
